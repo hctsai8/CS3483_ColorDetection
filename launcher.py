@@ -29,16 +29,25 @@ def check_dependencies():
     except ImportError:
         missing_deps.append("webcolors")
     
+    # Check Python version for MediaPipe compatibility
+    python_version = sys.version_info
+    mediapipe_compatible = python_version.major == 3 and 8 <= python_version.minor <= 11
+    
     try:
         import mediapipe
-        print("✓ MediaPipe installed (advanced mode available)")
+        print("✓ MediaPipe installed (gesture recognition available)")
         mediapipe_available = True
     except ImportError:
-        print("⚠ MediaPipe not installed (advanced mode unavailable)")
-        missing_deps.append("mediapipe")
+        if mediapipe_compatible:
+            print("⚠ MediaPipe not installed (but compatible with your Python version)")
+            missing_deps.append("mediapipe")
+        else:
+            print(f"⚠ MediaPipe not compatible with Python {python_version.major}.{python_version.minor}")
+            print("  MediaPipe requires Python 3.8-3.11")
+            print("  Advanced OpenCV mode available instead")
         mediapipe_available = False
     
-    return missing_deps, mediapipe_available
+    return missing_deps, mediapipe_available, mediapipe_compatible
 
 def install_dependencies(missing_deps):
     """Install missing dependencies"""
@@ -61,26 +70,40 @@ def install_dependencies(missing_deps):
         print("Please install dependencies manually before running the application.")
         return False
 
-def show_menu():
+def show_menu(mediapipe_available, mediapipe_compatible):
     """Show the main menu"""
     print("\n" + "="*50)
     print("    COLOR DETECTION SYSTEM")
     print("="*50)
     print("Choose an option:")
-    print("1. Advanced Mode (with gesture recognition)")
+    
+    if mediapipe_available:
+        print("1. MediaPipe Mode (hand tracking)")
+    else:
+        print("1. OpenCV Advanced Mode (motion/skin detection)")
+    
     print("2. Simple Mode (click-based detection)")
     print("3. Demo Mode (test color utilities)")
     print("4. Camera Test")
     print("5. Install/Update Dependencies")
     print("6. Exit")
     print("="*50)
+    
+    if not mediapipe_compatible:
+        print("Note: MediaPipe requires Python 3.8-3.11")
+        print(f"Your Python version: {sys.version_info.major}.{sys.version_info.minor}")
+        print("Using OpenCV-based alternatives for advanced features")
 
-def run_application(mode):
+def run_application(mode, mediapipe_available):
     """Run the selected application mode"""
     try:
         if mode == 1:
-            print("Starting Advanced Color Detection...")
-            subprocess.run([sys.executable, "color_detection.py"])
+            if mediapipe_available:
+                print("Starting MediaPipe Color Detection...")
+                subprocess.run([sys.executable, "color_detection.py"])
+            else:
+                print("Starting OpenCV Advanced Color Detection...")
+                subprocess.run([sys.executable, "opencv_color_detection.py"])
         elif mode == 2:
             print("Starting Simple Color Detection...")
             subprocess.run([sys.executable, "simple_color_detection.py"])
@@ -101,21 +124,19 @@ def main():
     print("Checking system compatibility...")
     
     # Check dependencies
-    missing_deps, mediapipe_available = check_dependencies()
+    missing_deps, mediapipe_available, mediapipe_compatible = check_dependencies()
     
     if missing_deps:
-        if not install_dependencies(missing_deps):
-            return
-        # Re-check after installation
-        missing_deps, mediapipe_available = check_dependencies()
+        # Only try to install compatible dependencies
+        compatible_deps = [dep for dep in missing_deps if dep != "mediapipe" or mediapipe_compatible]
+        if compatible_deps and install_dependencies(compatible_deps):
+            # Re-check after installation
+            missing_deps, mediapipe_available, mediapipe_compatible = check_dependencies()
     
     print("\nSystem ready!")
     
     while True:
-        show_menu()
-        
-        if not mediapipe_available:
-            print("Note: Advanced mode unavailable (MediaPipe not installed)")
+        show_menu(mediapipe_available, mediapipe_compatible)
         
         try:
             choice = int(input("\nEnter your choice (1-6): "))
@@ -124,21 +145,22 @@ def main():
             continue
         
         if choice == 1:
-            if mediapipe_available:
-                run_application(1)
-            else:
-                print("Advanced mode requires MediaPipe. Please install it first (option 5).")
+            run_application(1, mediapipe_available)
         elif choice == 2:
-            run_application(2)
+            run_application(2, mediapipe_available)
         elif choice == 3:
-            run_application(3)
+            run_application(3, mediapipe_available)
         elif choice == 4:
-            run_application(4)
+            run_application(4, mediapipe_available)
         elif choice == 5:
-            # Force re-check and installation
-            all_deps = ["opencv-python", "mediapipe", "numpy", "webcolors", "Pillow"]
+            # Install compatible dependencies
+            if mediapipe_compatible:
+                all_deps = ["opencv-python", "mediapipe", "numpy", "webcolors", "Pillow"]
+            else:
+                all_deps = ["opencv-python", "numpy", "webcolors", "Pillow"]
+                print("Skipping MediaPipe (incompatible with your Python version)")
             install_dependencies(all_deps)
-            missing_deps, mediapipe_available = check_dependencies()
+            missing_deps, mediapipe_available, mediapipe_compatible = check_dependencies()
         elif choice == 6:
             print("Thank you for using Color Detection System!")
             break

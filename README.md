@@ -15,9 +15,14 @@ A real-time color detection system utilizing advanced camera technology and gest
 ## Installation
 
 ### Prerequisites
-- Python 3.7 or higher
+- Python 3.7 or higher (3.13+ supported)
 - Webcam/Camera
 - Windows/Mac/Linux operating system
+
+### Python Version Compatibility
+- **Python 3.8-3.11**: Full MediaPipe gesture recognition available
+- **Python 3.12+**: OpenCV-based advanced detection (motion/skin detection)
+- **All versions**: Simple click-based detection always available
 
 ### Setup Instructions
 
@@ -39,20 +44,29 @@ A real-time color detection system utilizing advanced camera technology and gest
 
 ## Usage
 
-### Advanced Gesture Recognition Mode
+### Advanced Detection Modes
 
-Run the main color detection system with hand tracking:
-
+#### MediaPipe Gesture Recognition (Python 3.8-3.11)
 ```bash
 python color_detection.py
 ```
+- Point your index finger at objects
+- Real-time fingertip tracking
+- Most accurate gesture recognition
+
+#### OpenCV Advanced Detection (All Python versions)
+```bash
+python opencv_color_detection.py
+```
+- Motion-based pointing detection
+- Skin color detection
+- Multiple detection modes (press 'm' to switch)
 
 **Instructions:**
-- Point your index finger at objects in the camera view
-- The system will detect the color at your fingertip location
-- Color information is displayed in real-time on screen
-- Press 's' to save the current detected color to file
-- Press 'q' to quit the application
+- Move your hand to point at objects
+- Press 'm' to cycle through detection modes
+- Press 's' to save detected colors
+- Press 'q' to quit
 
 ### Simple Click Mode
 
@@ -73,12 +87,19 @@ python simple_color_detection.py
 
 ```
 CS3483_ColorDetection/
-├── color_detection.py          # Main application with gesture recognition
+├── color_detection.py          # MediaPipe-based gesture recognition (Python 3.8-3.11)
+├── opencv_color_detection.py   # OpenCV-based advanced detection (all Python versions)
 ├── simple_color_detection.py   # Simple click-based version
 ├── color_utils.py              # Color utility functions and palette management
+├── demo.py                     # Interactive demo and testing
+├── launcher.py                 # Smart launcher with compatibility detection
+├── test_camera.py              # Camera functionality test
+├── config.py                   # Configuration settings
 ├── requirements.txt            # Python dependencies
-├── README.md                  # This file
-└── detected_colors.txt        # Saved color history (created when colors are saved)
+├── run_color_detection.bat     # Windows launcher
+├── QUICK_START.md              # Quick usage guide
+├── README.md                   # This file
+└── detected_colors.txt         # Saved color history (created when colors are saved)
 ```
 
 ## Key Components
@@ -111,20 +132,34 @@ For each detected color, the system shows:
 
 ## Troubleshooting
 
+### MediaPipe Installation Issues
+**Problem**: `ERROR: Could not find a version that satisfies the requirement mediapipe`
+
+**Solution**: MediaPipe requires Python 3.8-3.11. Check your Python version:
+```bash
+python --version
+```
+
+**Options:**
+1. **Use OpenCV Advanced Mode**: Run `python opencv_color_detection.py` (works with all Python versions)
+2. **Use Simple Mode**: Run `python simple_color_detection.py`
+3. **Install Compatible Python**: Download Python 3.11 from python.org if you need MediaPipe
+
 ### Camera Issues
 - Ensure your webcam is properly connected and not used by other applications
 - Try different camera indices if default camera (0) doesn't work
 - Check camera permissions in your system settings
-
-### MediaPipe Installation Issues
-- If MediaPipe fails to install, use the simple click mode instead
-- Ensure you have the correct Python version (3.7-3.11 recommended)
-- Try installing MediaPipe separately: `pip install mediapipe`
+- Run `python test_camera.py` to diagnose camera problems
 
 ### Performance Issues
-- Reduce camera resolution in the code if needed
+- Use Simple Mode for best performance on older systems
 - Close other applications using the camera
-- Use simple_color_detection.py for better performance on older systems
+- Reduce camera resolution in config.py if needed
+
+### Python Version Compatibility
+- **Python 3.13+**: OpenCV advanced mode and simple mode available
+- **Python 3.8-3.11**: All modes including MediaPipe available
+- **Python 3.7**: Simple mode and basic OpenCV features available
 
 ## Technical Details
 
