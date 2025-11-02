@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Detection Studio</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">Color Detection Studio</h1>
+            <p class="subtitle">Real-time color analysis from your camera</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="app-container">
+            <section class="video-section">
+                <div class="video-wrapper">
+                    <video id="video" autoplay muted playsinline></video>
+                    <div class="crosshair">
+                        <div class="crosshair-horizontal"></div>
+                        <div class="crosshair-vertical"></div>
+                    </div>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <button id="start-btn" class="btn btn-primary">
+                        <span class="btn-icon">📹</span>
+                        Start Camera
+                    </button>
+                    <button id="pause-btn" class="btn btn-secondary" disabled>
+                        <span class="btn-icon">⏸️</span>
+                        Pause
+                    </button>
+                    <button id="capture-btn" class="btn btn-accent" disabled>
+                        <span class="btn-icon">📸</span>
+                        Capture Color
+                    </button>
+                </div>
+            </section>
+
+            <aside class="sidebar">
+                <div class="current-color-card">
+                    <h3>Current Color</h3>
+                    <div class="color-preview" id="color-preview"></div>
+                    <div class="color-info">
+                        <div class="color-value">
+                            <label>HEX</label>
+                            <span id="hex-value">#FFFFFF</span>
+                        </div>
+                        <div class="color-value">
+                            <label>RGB</label>
+                            <span id="rgb-value">255, 255, 255</span>
+                        </div>
+                        <div class="color-value">
+                            <label>HSL</label>
+                            <span id="hsl-value">0°, 0%, 100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <div class="history-header">
+                        <h3>Color History</h3>
+                        <button id="clear-history" class="btn-small">Clear</button>
+                    </div>
+                    <div id="color-history" class="color-history"></div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="notification" class="notification hidden">
+        <span id="notification-text"></span>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

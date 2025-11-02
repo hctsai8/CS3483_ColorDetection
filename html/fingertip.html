@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Distinction</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Fingertip Color Detection</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
 </head>
 <body>
-    <h1>Color Distinction</h1>
+    <h1>Fingertip Color Detection</h1>
     <div id="container">
         <div id="video-container">
             <video id="video" autoplay></video>
@@ -20,6 +22,6 @@
             <div id="color-history"></div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="../js/fingertip.js"></script>
 </body>
 </html>
