@@ -3,25 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fingertip Color Detection</title>
+    <title>Fingertip Color Detection Studio</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
 </head>
 <body>
-    <h1>Fingertip Color Detection</h1>
-    <div id="container">
-        <div id="video-container">
-            <video id="video" autoplay></video>
-            <div id="color-display">
-                <p>Detected Color: <span id="color-code">#FFFFFF</span></p>
-            </div>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">Fingertip Color Detection Studio</h1>
+            <p class="subtitle">AI-powered color analysis using hand tracking</p>
         </div>
-        <div id="color-history-container">
-            <h2>Color History</h2>
-            <div id="color-history"></div>
+    </header>
+
+    <main class="main-content">
+        <div class="app-container">
+            <section class="video-section">
+                <div class="video-wrapper">
+                    <video id="video" autoplay muted playsinline></video>
+                    <div id="cursor"></div>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="status-group">
+                        <div class="status-indicator">
+                            <span id="camera-status">🔴 Initializing hand tracking...</span>
+                        </div>
+                        <div class="status-indicator">
+                            <span id="hand-status">🖐️ Show your index finger to the camera</span>
+                        </div>
+                    </div>
+                    <div class="save-group">
+                        <button id="save-color-control" class="btn btn-accent" disabled>
+                            <span class="btn-icon">💾</span>
+                            Save Current Color
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="sidebar">
+                <div class="current-color-card">
+                    <h3>Current Color</h3>
+                    <div class="color-preview" id="color-preview"></div>
+                    <div class="color-info">
+                        <div class="color-value">
+                            <label>HEX</label>
+                            <span id="hex-value">#FFFFFF</span>
+                        </div>
+                        <div class="color-value">
+                            <label>RGB</label>
+                            <span id="rgb-value">255, 255, 255</span>
+                        </div>
+                        <div class="color-value">
+                            <label>HSL</label>
+                            <span id="hsl-value">0°, 0%, 100%</span>
+                        </div>
+                    </div>
+                    <div class="color-actions">
+                        <button id="copy-hex" class="btn-small">Copy HEX</button>
+                        <button id="save-color" class="btn-small">Save Color</button>
+                    </div>
+                </div>
+
+                <div class="history-card">
+                    <div class="history-header">
+                        <h3>Color History</h3>
+                        <button id="clear-history" class="btn-small">Clear</button>
+                    </div>
+                    <div id="color-history" class="color-history"></div>
+                </div>
+
+                <div class="hand-tracking-info">
+                    <h3>Hand Tracking Tips</h3>
+                    <div class="tracking-status">
+                        <div class="tracking-tip">
+                            <span>👆 Point your index finger at colors</span>
+                        </div>
+                        <div class="tracking-tip">
+                            <span>💾 Press Save or Space key to capture</span>
+                        </div>
+                        <div class="tracking-tip">
+                            <span>📋 Ctrl+C to copy current color</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
+    </main>
+
+    <div id="notification" class="notification hidden">
+        <span id="notification-text"></span>
     </div>
+
     <script src="../js/fingertip.js"></script>
 </body>
 </html>
