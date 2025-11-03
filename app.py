@@ -4,11 +4,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return send_from_directory('html', 'index.html')
+    return send_from_directory('html', 'dashboard.html')
 
 @app.route('/fingertip')
 def fingertip():
-    return send_from_directory('html', 'fingertip.html')
+    return send_from_directory('html', 'cursor_detection.html')
+
+@app.route('/fingertip')
+def fingertip():
+    return send_from_directory('html', 'fingertip_detection.html')
 
 @app.route('/css/<path:filename>')
 def css_files(filename):

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Detection Dashboard</title>
+    <link rel="stylesheet" href="../css/detection.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">Color Detection Studio</h1>
+            <p class="subtitle">Analytics Dashboard & Usage Overview</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard-container">
+            <!-- Welcome Message -->
+            <div class="welcome-card">
+                <div class="welcome-content">
+                    <span class="welcome-icon">🌙</span>
+                    <h2>Good night!</h2>
+                    <p>You have already inspired <span class="highlight">10</span> workers.</p>
+                </div>
+            </div>
+
+            <!-- Time Usage Analytics -->
+            <div class="analytics-section">
+                <div class="analytics-header">
+                    <h2>Usage Analytics</h2>
+                    <p>Plot graph about time usage in entire month</p>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="usageChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Action Cards -->
+            <div class="action-cards">
+                <div class="action-card">
+                    <div class="feature-highlight">Popular</div>
+                    <div class="card-header">
+                        <div class="card-icon">🖱️</div>
+                        <div class="card-info">
+                            <h3>Mouse Color Detection</h3>
+                            <p>Point and click to detect colors from your camera</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-preview">
+                        <div class="preview-placeholder">
+                            <div class="preview-placeholder-icon">🖱️</div>
+                            <div class="preview-placeholder-text">
+                                Real-time cursor-based<br>color detection
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <span class="metric-value">156</span>
+                            <span class="metric-label">Colors Detected</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">24</span>
+                            <span class="metric-label">Sessions</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <a href="index.html" class="card-action-btn">
+                            Start Detection
+                        </a>
+                    </div>
+                </div>
+
+                <div class="action-card">
+                    <div class="feature-highlight">AI Powered</div>
+                    <div class="card-header">
+                        <div class="card-icon">🖐️</div>
+                        <div class="card-info">
+                            <h3>Fingertip Detection</h3>
+                            <p>AI-powered hand tracking for hands-free color detection</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-preview">
+                        <div class="preview-placeholder">
+                            <div class="preview-placeholder-icon">🖐️</div>
+                            <div class="preview-placeholder-text">
+                                Advanced hand tracking<br>with MediaPipe AI
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <span class="metric-value">89</span>
+                            <span class="metric-label">Colors Detected</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">12</span>
+                            <span class="metric-label">Sessions</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <a href="fingertip.html" class="card-action-btn">
+                            Start Hand Tracking
+                        </a>
+                    </div>
+                </div>
+
+                <div class="action-card">
+                    <div class="card-header">
+                        <div class="card-icon">📊</div>
+                        <div class="card-info">
+                            <h3>Analytics Overview</h3>
+                            <p>View detailed usage statistics and color history</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-preview">
+                        <div class="preview-placeholder">
+                            <div class="preview-placeholder-icon">📈</div>
+                            <div class="preview-placeholder-text">
+                                Comprehensive analytics<br>and reporting
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">245</span>
+                            <span class="stat-label">Total Colors</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">36</span>
+                            <span class="stat-label">Total Sessions</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5.2h</span>
+                            <span class="stat-label">Usage Time</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label">Accuracy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navigation Menu -->
+    <nav class="dashboard-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🖱️</span>
+            <span>Mouse Detection</span>
+        </a>
+        <a href="fingertip.html" class="nav-item">
+            <span class="nav-icon">🖐️</span>
+            <span>Fingertip Detection</span>
+        </a>
+        <a href="dashboard.html" class="nav-item active">
+            <span class="nav-icon">📊</span>
+            <span>Dashboard</span>
+        </a>
+    </nav>
+
+    <div id="notification" class="notification hidden">
+        <span id="notification-text"></span>
+    </div>
+
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

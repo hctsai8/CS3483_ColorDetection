@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fingertip Color Detection Studio</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/detection.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
@@ -42,6 +42,21 @@
                         </button>
                     </div>
                 </div>
+                
+                <div class="hand-tracking-info">
+                    <h3>Hand Tracking Tips</h3>
+                    <div class="tracking-status">
+                        <div class="tracking-tip">
+                            <span>👆 Point your index finger at colors</span>
+                        </div>
+                        <div class="tracking-tip">
+                            <span>💾 Press Save or Space key to capture</span>
+                        </div>
+                        <div class="tracking-tip">
+                            <span>📋 Ctrl+C to copy current color</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <aside class="sidebar">
@@ -76,20 +91,6 @@
                     <div id="color-history" class="color-history"></div>
                 </div>
 
-                <div class="hand-tracking-info">
-                    <h3>Hand Tracking Tips</h3>
-                    <div class="tracking-status">
-                        <div class="tracking-tip">
-                            <span>👆 Point your index finger at colors</span>
-                        </div>
-                        <div class="tracking-tip">
-                            <span>💾 Press Save or Space key to capture</span>
-                        </div>
-                        <div class="tracking-tip">
-                            <span>📋 Ctrl+C to copy current color</span>
-                        </div>
-                    </div>
-                </div>
             </aside>
         </div>
     </main>

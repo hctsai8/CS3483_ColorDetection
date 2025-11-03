@@ -117,6 +117,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-bottom: 2rem; /* Add space between controls and hand tracking info */
 }
 
 .status-group {
