@@ -20,26 +20,18 @@
             <section class="video-section">
                 <div class="video-wrapper">
                     <video id="video" autoplay muted playsinline></video>
-                    <div class="crosshair">
-                        <div class="crosshair-horizontal"></div>
-                        <div class="crosshair-vertical"></div>
-                    </div>
                     <canvas id="canvas" style="display: none;"></canvas>
+                    <canvas id="paused-canvas" style="display: none;"></canvas>
                 </div>
                 
                 <div class="controls">
-                    <button id="start-btn" class="btn btn-primary">
-                        <span class="btn-icon">📹</span>
-                        Start Camera
-                    </button>
-                    <button id="pause-btn" class="btn btn-secondary" disabled>
+                    <button id="pause-btn" class="btn btn-secondary">
                         <span class="btn-icon">⏸️</span>
-                        Pause
+                        Pause Video
                     </button>
-                    <button id="capture-btn" class="btn btn-accent" disabled>
-                        <span class="btn-icon">📸</span>
-                        Capture Color
-                    </button>
+                    <div class="status-indicator">
+                        <span id="camera-status">🔴 Connecting to camera...</span>
+                    </div>
                 </div>
             </section>
 
@@ -60,6 +52,10 @@
                             <label>HSL</label>
                             <span id="hsl-value">0°, 0%, 100%</span>
                         </div>
+                    </div>
+                    <div class="color-actions">
+                        <button id="copy-hex" class="btn-small">Copy HEX</button>
+                        <button id="save-color" class="btn-small">Save Color</button>
                     </div>
                 </div>
 

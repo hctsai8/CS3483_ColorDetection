@@ -90,6 +90,7 @@ body {
     background: #000;
     margin-bottom: 2rem;
     aspect-ratio: 16/9;
+    cursor: default;
 }
 
 #video {
@@ -99,39 +100,79 @@ body {
     display: block;
 }
 
-.crosshair {
+#paused-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    cursor: default;
+}
+
+.cursor-indicator {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.cursor-indicator.visible {
+    opacity: 1;
+}
+
+.cursor-indicator::before {
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 50%;
     transform: translate(-50%, -50%);
-    pointer-events: none;
-}
-
-.crosshair-horizontal,
-.crosshair-vertical {
-    position: absolute;
-    background: rgba(99, 102, 241, 0.8);
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-}
-
-.crosshair-horizontal {
-    width: 30px;
-    height: 2px;
-    left: -15px;
-    top: -1px;
-}
-
-.crosshair-vertical {
-    width: 2px;
-    height: 30px;
-    left: -1px;
-    top: -15px;
 }
 
 .controls {
     display: flex;
     gap: 1rem;
+    align-items: center;
     flex-wrap: wrap;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--surface-light);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+#camera-status {
+    font-weight: 500;
+}
+
+.camera-status.connected {
+    color: var(--success);
+}
+
+.camera-status.paused {
+    color: var(--warning);
+}
+
+.camera-status.error {
+    color: var(--error);
 }
 
 .btn {
@@ -354,33 +395,119 @@ body {
     transform: translateY(0);
 }
 
-.notification {
+.delete-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.history-item:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background: var(--error);
+    transform: scale(1.1);
+}
+
+.history-count {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+}
+
+.color-detection-popup {
     position: fixed;
     top: 2rem;
     right: 2rem;
     background: var(--surface);
-    color: var(--text-primary);
-    padding: 1rem 1.5rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-lg);
     border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    box-shadow: var(--shadow-lg);
     transform: translateX(400px);
-    transition: transform 0.3s ease;
-    z-index: 1000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    min-width: 200px;
+    max-width: 300px;
 }
 
-.notification:not(.hidden) {
+.color-detection-popup.show {
     transform: translateX(0);
+    opacity: 1;
 }
 
-.notification.success {
-    border-color: var(--success);
-    background: linear-gradient(135deg, var(--surface), rgba(16, 185, 129, 0.1));
+.popup-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
-.notification.error {
-    border-color: var(--error);
-    background: linear-gradient(135deg, var(--surface), rgba(239, 68, 68, 0.1));
+.popup-color-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.popup-color-swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+}
+
+.popup-color-details {
+    flex: 1;
+}
+
+.popup-color-value {
+    font-family: 'Monaco', 'Consolas', monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin: 0.125rem 0;
+}
+
+.popup-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 1rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.popup-close:hover {
+    color: var(--text-primary);
 }
 
 @media (max-width: 1024px) {
@@ -411,6 +538,11 @@ body {
     
     .controls {
         flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .status-indicator {
+        text-align: center;
     }
     
     .btn {
@@ -424,16 +556,23 @@ body {
     .color-history {
         grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
     }
+    
+    .color-detection-popup {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        transform: translateY(-100px);
+        max-width: none;
+    }
+    
+    .color-detection-popup.show {
+        transform: translateY(0);
+    }
 }
 
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
-}
-
-.crosshair-horizontal,
-.crosshair-vertical {
-    animation: pulse 2s infinite;
 }
 
 .fade-in {
@@ -443,4 +582,36 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.video-wrapper.paused #video {
+    filter: brightness(0.8);
+}
+
+.video-wrapper.paused::after {
+    content: 'PAUSED';
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(245, 158, 11, 0.9);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    z-index: 3;
+}
+
+.color-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.color-actions .btn-small {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
 }
