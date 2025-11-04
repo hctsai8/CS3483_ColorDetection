@@ -6,12 +6,12 @@ app = Flask(__name__)
 def index():
     return send_from_directory('html', 'dashboard.html')
 
-@app.route('/fingertip')
-def fingertip():
+@app.route('/cursor')
+def cursor_detection():
     return send_from_directory('html', 'cursor_detection.html')
 
 @app.route('/fingertip')
-def fingertip():
+def fingertip_detection():
     return send_from_directory('html', 'fingertip_detection.html')
 
 @app.route('/css/<path:filename>')

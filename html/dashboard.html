@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Detection Dashboard</title>
     <link rel="stylesheet" href="../css/detection.css">
+    <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,6 +17,25 @@
             <p class="subtitle">Analytics Dashboard & Usage Overview</p>
         </div>
     </header>
+
+    <!-- Top Navigation Menu -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="/" class="top-nav-item active">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="/cursor" class="top-nav-item">
+                <span class="nav-icon">🖱️</span>
+                <span>Mouse Detection</span>
+            </a>
+            <a href="/fingertip" class="top-nav-item">
+                <span class="nav-icon">🖐️</span>
+                <span>Fingertip Detection</span>
+            </a>
+            
+        </div>
+    </nav>
 
     <main class="main-content">
         <div class="dashboard-container">
@@ -73,7 +93,7 @@
                     </div>
                     
                     <div class="card-actions">
-                        <a href="index.html" class="card-action-btn">
+                        <a href="/cursor" class="card-action-btn">
                             Start Detection
                         </a>
                     </div>
@@ -110,7 +130,7 @@
                     </div>
                     
                     <div class="card-actions">
-                        <a href="fingertip.html" class="card-action-btn">
+                        <a href="/fingertip" class="card-action-btn">
                             Start Hand Tracking
                         </a>
                     </div>
@@ -159,15 +179,15 @@
 
     <!-- Navigation Menu -->
     <nav class="dashboard-nav">
-        <a href="index.html" class="nav-item">
+        <a href="/cursor" class="nav-item">
             <span class="nav-icon">🖱️</span>
             <span>Mouse Detection</span>
         </a>
-        <a href="fingertip.html" class="nav-item">
+        <a href="/fingertip" class="nav-item">
             <span class="nav-icon">🖐️</span>
             <span>Fingertip Detection</span>
         </a>
-        <a href="dashboard.html" class="nav-item active">
+        <a href="/" class="nav-item active">
             <span class="nav-icon">📊</span>
             <span>Dashboard</span>
         </a>
