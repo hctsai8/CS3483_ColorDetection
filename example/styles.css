@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    margin: 20px 0;
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+#video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#video {
+    width: 95%; /* Further increase the video width */
+    max-width: 1000px; /* Allow an even larger maximum width */
+    border: 2px solid #000;
+    border-radius: 8px;
+}
+
+#color-display {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+}
+
+#color-code {
+    font-weight: bold;
+    color: #000;
+}
+
+#color-history-container {
+    margin-top: 0; /* Align with the top of the video */
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    flex: 0 0 25%; /* Set the width to one-fourth of the container */
+    text-align: left;
+}
+
+#color-history {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    max-height: 400px; /* Limit the height of the history section */
+    overflow-y: auto; /* Add a scrollbar if the content exceeds the height */
+}
+
+.color-item {
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    min-width: 80px;
+}
+
+#cursor {
+    position: absolute;
+    width: 30px; /* Larger size for better visibility */
+    height: 30px;
+    border: 2px solid red; /* Crosshair border */
+    border-radius: 50%; /* Circular shape */
+    background: transparent; /* Transparent center */
+    pointer-events: none; /* Ensure it doesn't block interactions */
+    transform: translate(-50%, -50%); /* Center the cursor */
+    display: none; /* Initially hidden */
+    z-index: 10; /* Ensure it appears above the video */
+}
+
+#cursor::before,
+#cursor::after {
+    content: '';
+    position: absolute;
+    background-color: red;
+}
+
+#cursor::before {
+    width: 2px;
+    height: 100%; /* Vertical line */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#cursor::after {
+    width: 100%; /* Horizontal line */
+    height: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+}

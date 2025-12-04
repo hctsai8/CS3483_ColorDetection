@@ -1,0 +1,10 @@
+This directory contains item images for the detection system.
+
+Place your item images here with these filenames:
+- table-lamp.jpg
+- desk-lamp.jpg  
+- floor-lamp.jpg
+- pendant-light.jpg
+
+Images should be around 300x300 pixels for best results.
+If images are not available, the system will show emoji fallbacks.
