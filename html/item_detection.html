@@ -24,17 +24,26 @@
                 <span class="nav-icon">📊</span>
                 <span>Dashboard</span>
             </a>
-            <a href="/cursor" class="top-nav-item">
-                <span class="nav-icon">🖱️</span>
-                <span>Mouse Detection</span>
-            </a>
-            <a href="/fingertip" class="top-nav-item">
-                <span class="nav-icon">🖐️</span>
-                <span>Fingertip Detection</span>
-            </a>
-            <a href="/item" class="top-nav-item active">
-                <span class="nav-icon">🔍</span>
-                <span>Item Detection</span>
+            <div class="dropdown">
+                <button class="dropbtn top-nav-item">
+                    <span class="nav-icon">🔍</span>
+                        <span>Detection   </span>
+                  </button>
+                  <div class="dropdown-content">
+                    <a href="/cursor" class="top-nav-item">
+                        <span class="nav-icon">🖱️</span>
+                        <span>Mouse Detection</span>
+                    </a>
+                    <a href="/fingertip" class="top-nav-item">
+                        <span class="nav-icon">🖐️</span>
+                        <span>Fingertip Detection</span>
+                    </a>
+                  </div>
+            </div>
+            
+            <a href="/item" class="top-nav-item  active">
+                <span class="nav-icon">💡</span>
+                <span>Item Recommendation</span>
             </a>
         </div>
     </nav>
