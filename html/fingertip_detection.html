@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fingertip Color Detection Studio</title>
+    <title>Item Detection Studio</title>
     <link rel="stylesheet" href="../css/detection.css">
     <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/item-detection.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
 </head>
 <body>
     <header class="header">
         <div class="header-content">
-            <h1 class="title">Fingertip Color Detection</h1>
-            <p class="subtitle">AI-powered color analysis using hand tracking</p>
+            <h1 class="title">Item Recommendation</h1>
+            <p class="subtitle">AI-powered item recognition and color analysis</p>
         </div>
     </header>
 
@@ -25,95 +24,167 @@
                 <span class="nav-icon">📊</span>
                 <span>Dashboard</span>
             </a>
-            <a href="/cursor" class="top-nav-item">
-                <span class="nav-icon">🖱️</span>
-                <span>Mouse Detection</span>
-            </a>
-            <a href="/fingertip" class="top-nav-item active">
-                <span class="nav-icon">🖐️</span>
-                <span>Fingertip Detection</span>
-            </a>
-            <a href="/item" class="top-nav-item">
-                <span class="nav-icon">🔍</span>
-                <span>Item Detection</span>
+            <div class="dropdown">
+                <button class="dropbtn top-nav-item">
+                    <span class="nav-icon">🔍</span>
+                        <span>Detection   </span>
+                  </button>
+                  <div class="dropdown-content">
+                    <a href="/cursor" class="top-nav-item">
+                        <span class="nav-icon">🖱️</span>
+                        <span>Mouse Detection</span>
+                    </a>
+                    <a href="/fingertip" class="top-nav-item">
+                        <span class="nav-icon">🖐️</span>
+                        <span>Fingertip Detection</span>
+                    </a>
+                  </div>
+            </div>
+            
+            <a href="/item" class="top-nav-item  active">
+                <span class="nav-icon">💡</span>
+                <span>Item Recommendation</span>
             </a>
         </div>
     </nav>
 
     <main class="main-content">
-        <div class="app-container">
-            <section class="video-section">
+        <div class="item-detection-container">
+            <section class="camera-section">
                 <div class="video-wrapper">
                     <video id="video" autoplay muted playsinline></video>
-                    <div id="cursor"></div>
                     <canvas id="canvas" style="display: none;"></canvas>
-                </div>
-                
-                <div class="controls">
-                    <div class="status-group">
-                        <div class="status-indicator">
-                            <span id="camera-status">🔴 Initializing hand tracking...</span>
-                        </div>
-                        <div class="status-indicator">
-                            <span id="hand-status">🖐️ Show your index finger to the camera</span>
+                    <div class="item-preview-overlay" id="item-preview-overlay" style="display: none;">
+                        <div class="item-image-container" id="item-image-container">
+                            <div class="drag-handle" id="drag-handle">✋</div>
+                            <div class="image-placeholder" id="image-placeholder" style="display: none;">💡</div>
+                            <img id="selected-item-image" alt="Selected Item" style="display: none;">
+                            <div class="item-overlay-label" id="item-overlay-label">
+                                <span id="overlay-item-name">Select an item</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="save-group">
-                        <button id="save-color-control" class="btn btn-accent" disabled>
-                            <span class="btn-icon">💾</span>
-                            Save Current Color
-                        </button>
+                    <div class="camera-status">
+                        <span id="camera-indicator">🟢 Camera active</span>
                     </div>
                 </div>
                 
-                <div class="hand-tracking-info">
-                    <h3>Hand Tracking Tips</h3>
-                    <div class="tracking-status">
-                        <div class="tracking-tip">
-                            <span>👆 Point your index finger at colors</span>
+                <div class="item-controls">
+                    <div class="item-gallery-group">
+                        <label>Quick Select - Hot items</label>
+                        <div class="item-gallery" id="item-gallery">
+                            <div class="gallery-item active" data-item="Table Lamp" data-image="/images/items/table-lamp">
+                                <div class="gallery-placeholder">💡</div>
+                                <img alt="Table Lamp" style="display: none;">
+                            </div>
+                            <div class="gallery-item" data-item="Desk Lamp" data-image="/images/items/desk-lamp">
+                                <div class="gallery-placeholder">🔦</div>
+                                <img alt="Desk Lamp" style="display: none;">
+                            </div>
+                            <div class="gallery-item" data-item="Floor Lamp" data-image="/images/items/floor-lamp">
+                                <div class="gallery-placeholder">🕯️</div>
+                                <img alt="Floor Lamp" style="display: none;">
+                            </div>
+                            <div class="gallery-item" data-item="Pendant Light" data-image="/images/items/pendant-light">
+                                <div class="gallery-placeholder">💡</div>
+                                <img alt="Pendant Light" style="display: none;">
+                            </div>
                         </div>
-                        <div class="tracking-tip">
-                            <span>💾 Press Save or Space key to capture</span>
-                        </div>
-                        <div class="tracking-tip">
-                            <span>📋 Ctrl+C to copy current color</span>
+                    </div>
+                    <div class="size-controls">
+                        <label>Item Size</label>
+                        <div class="control-buttons">
+                            <button id="size-small" class="btn btn-secondary">Small</button>
+                            <button id="size-medium" class="btn btn-secondary active">Medium</button>
+                            <button id="size-large" class="btn btn-secondary">Large</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <aside class="sidebar">
-                <div class="current-color-card">
-                    <h3>Current Color</h3>
-                    <div class="color-preview" id="color-preview"></div>
-                    <div class="color-info">
-                        <div class="color-value">
-                            <label>HEX</label>
-                            <span id="hex-value">#FFFFFF</span>
-                        </div>
-                        <div class="color-value">
-                            <label>RGB</label>
-                            <span id="rgb-value">255, 255, 255</span>
-                        </div>
-                        <div class="color-value">
-                            <label>HSL</label>
-                            <span id="hsl-value">0°, 0%, 100%</span>
-                        </div>
+            <aside class="analysis-sidebar">
+                <div class="item-info-section">
+                    <div class="section-header">
+                        <h3>Item Information</h3>
                     </div>
-                    <div class="color-actions">
-                        <button id="copy-hex" class="btn-small">Copy HEX</button>
-                        <button id="save-color" class="btn-small">Save Color</button>
+                    <div class="item-details">
+                        <div class="detail-item">
+                            <label>Name:</label>
+                            <span id="current-item-name">Table Lamp</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Position:</label>
+                            <span id="current-position">Center</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Size:</label>
+                            <span id="current-size">150x150 px</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="history-card">
-                    <div class="history-header">
-                        <h3>Color History</h3>
-                        <button id="clear-history" class="btn-small">Clear</button>
+                <div class="suggested-items-section">
+                    <h3>Available Items</h3>
+                    <div class="item-suggestions">
+                        <div class="item-suggestion" data-item="Table Lamp" data-image="/images/items/table-lamp">
+                            <div class="item-icon">
+                                <div class="icon-placeholder">💡</div>
+                                <img alt="Table Lamp" style="display: none;">
+                            </div>
+                            <span>Table Lamp</span>
+                        </div>
+                        <div class="item-suggestion" data-item="Desk Lamp" data-image="/images/items/desk-lamp">
+                            <div class="item-icon">
+                                <div class="icon-placeholder">🔦</div>
+                                <img alt="Desk Lamp" style="display: none;">
+                            </div>
+                            <span>Desk Lamp</span>
+                        </div>
+                        <div class="item-suggestion" data-item="Floor Lamp" data-image="/images/items/floor-lamp">
+                            <div class="item-icon">
+                                <div class="icon-placeholder">🕯️</div>
+                                <img alt="Floor Lamp" style="display: none;">
+                            </div>
+                            <span>Floor Lamp</span>
+                        </div>
+                        <div class="item-suggestion" data-item="Pendant Light" data-image="/images/items/pendant-light">
+                            <div class="item-icon">
+                                <div class="icon-placeholder">💡</div>
+                                <img alt="Pendant Light" style="display: none;">
+                            </div>
+                            <span>Pendant Light</span>
+                        </div>
+                        <div class="item-suggestion" data-item="Ceiling Fan" data-image="/images/items/ceiling-fan">
+                            <div class="item-icon">
+                                <div class="icon-placeholder">🌪️</div>
+                                <img alt="Ceiling Fan" style="display: none;">
+                            </div>
+                            <span>Ceiling Fan</span>
+                        </div>
+                        <div class="item-suggestion" data-item="Wall Sconce" data-image="/images/items/wall-sconce">
+                            <div class="item-icon">
+                                <div class="icon-placeholder">🕯️</div>
+                                <img alt="Wall Sconce" style="display: none;">
+                            </div>
+                            <span>Wall Sconce</span>
+                        </div>
                     </div>
-                    <div id="color-history" class="color-history"></div>
                 </div>
 
+                <div class="usage-tips-section">
+                    <h3>Usage Tips</h3>
+                    <div class="tips-list">
+                        <div class="tip-item">
+                            <span>🖱️ Drag item to move position</span>
+                        </div>
+                        <div class="tip-item">
+                            <span>🎯 Click gallery to change item</span>
+                        </div>
+                        <div class="tip-item">
+                            <span>🔢 Use size buttons to resize</span>
+                        </div>
+                    </div>
+                </div>
             </aside>
         </div>
     </main>
@@ -122,6 +193,6 @@
         <span id="notification-text"></span>
     </div>
 
-    <script src="../js/fingertip.js"></script>
+    <script src="../js/item-detection.js"></script>
 </body>
 </html>

@@ -21,15 +21,24 @@
 .top-nav-item {
     display: flex;
     align-items: center;
+    justify-content: center; /* Centers content horizontally */
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    
+    /* WIDTH SETTINGS */
+    width: 250px;        /* 1. Sets a fixed static width for all items */
+    padding: 0.75rem 0;  /* 2. Removed side padding, keeping top/bottom */
+    
     border-radius: 12px;
     text-decoration: none;
-    color: #6B7280;
+    color: #9CA3AF;
     font-weight: 500;
     transition: all 0.3s ease;
     background: transparent;
     border: 1px solid transparent;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    box-sizing: border-box; /* Ensures padding doesn't affect total width */
 }
 
 .top-nav-item:hover {
@@ -47,6 +56,71 @@
 .top-nav-item .nav-icon {
     font-size: 1.25rem;
 }
+
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Reset button defaults but keep .top-nav-item styling */
+.dropdown .dropbtn {
+    margin: 0;
+    outline: none;
+}
+
+/* Dropdown Content (The hidden menu) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Pushes it below the nav bar */
+    left: 50%;
+    transform: translateX(-50%); /* Centers it */
+    
+    background-color: #ffffff;
+    min-width: 170px;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 0.5rem;
+    z-index: 1000;
+    margin-top: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    top: -20px;      /* Reaches up to touch the button */
+    left: 0;
+    width: 100%;
+    height: 20px;    /* Height of the bridge */
+    background: transparent; /* Keeps it invisible */
+}
+
+/* Show menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: #4B5563;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+/* Hover effect for dropdown items */
+.dropdown-content a:hover {
+    background-color: rgba(99, 102, 241, 0.1);
+    color: #6366F1;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {

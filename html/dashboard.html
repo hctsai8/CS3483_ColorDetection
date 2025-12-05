@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <header class="header">
         <div class="header-content">
@@ -25,17 +27,26 @@
                 <span class="nav-icon">📊</span>
                 <span>Dashboard</span>
             </a>
-            <a href="/cursor" class="top-nav-item">
-                <span class="nav-icon">🖱️</span>
-                <span>Mouse Detection</span>
-            </a>
-            <a href="/fingertip" class="top-nav-item">
-                <span class="nav-icon">🖐️</span>
-                <span>Fingertip Detection</span>
-            </a>
+            <div class="dropdown">
+                <button class="dropbtn top-nav-item">
+                    <span class="nav-icon">🔍</span>
+                    <span>Detection </span>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/cursor" class="top-nav-item">
+                        <span class="nav-icon">🖱️</span>
+                        <span>Mouse Detection</span>
+                    </a>
+                    <a href="/fingertip" class="top-nav-item">
+                        <span class="nav-icon">🖐️</span>
+                        <span>Fingertip Detection</span>
+                    </a>
+                </div>
+            </div>
+
             <a href="/item" class="top-nav-item">
-                <span class="nav-icon">🔍</span>
-                <span>Item Detection</span>
+                <span class="nav-icon">💡</span>
+                <span>Item Recommendation</span>
             </a>
         </div>
     </nav>
@@ -57,7 +68,7 @@
                     <h2>Usage Analytics</h2>
                     <p>Plot graph about time usage in entire month</p>
                 </div>
-                
+
                 <div class="chart-container">
                     <canvas id="usageChart"></canvas>
                 </div>
@@ -74,7 +85,7 @@
                             <p>Point and click to detect colors from your camera</p>
                         </div>
                     </div>
-                    
+
                     <div class="card-preview">
                         <div class="preview-placeholder">
                             <div class="preview-placeholder-icon">🖱️</div>
@@ -83,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card-metrics">
                         <div class="metric">
                             <span class="metric-value">156</span>
@@ -94,7 +105,7 @@
                             <span class="metric-label">Sessions</span>
                         </div>
                     </div>
-                    
+
                     <div class="card-actions">
                         <a href="/cursor" class="card-action-btn">
                             Start Detection
@@ -111,7 +122,7 @@
                             <p>AI-powered hand tracking for hands-free color detection</p>
                         </div>
                     </div>
-                    
+
                     <div class="card-preview">
                         <div class="preview-placeholder">
                             <div class="preview-placeholder-icon">🖐️</div>
@@ -120,7 +131,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card-metrics">
                         <div class="metric">
                             <span class="metric-value">89</span>
@@ -131,7 +142,7 @@
                             <span class="metric-label">Sessions</span>
                         </div>
                     </div>
-                    
+
                     <div class="card-actions">
                         <a href="/fingertip" class="card-action-btn">
                             Start Hand Tracking
@@ -141,39 +152,38 @@
 
                 <div class="action-card">
                     <div class="card-header">
-                        <div class="card-icon">📊</div>
+                        <div class="card-icon">💡</div>
                         <div class="card-info">
-                            <h3>Analytics Overview</h3>
-                            <p>View detailed usage statistics and color history</p>
+                            <h3>Item Recommendation</h3>
+                            <p>Suggest items that complement the surrounding design</p>
                         </div>
                     </div>
-                    
+
                     <div class="card-preview">
                         <div class="preview-placeholder">
-                            <div class="preview-placeholder-icon">📈</div>
+                            <div class="preview-placeholder-icon">💡</div>
                             <div class="preview-placeholder-text">
-                                Comprehensive analytics<br>and reporting
+                                Comprehensive items<br>suggestions
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-number">245</span>
-                            <span class="stat-label">Total Colors</span>
+
+                    <div class="card-metrics">
+                        <div class="metric">
+                            <span class="metric-value">24</span>
+                            <span class="metric-label">Suggested Colors</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">36</span>
-                            <span class="stat-label">Total Sessions</span>
+                        <div class="metric">
+                            <span class="metric-value">36</span>
+                            <span class="metric-label">Suggested items</span>
                         </div>
-                        <div class="stat-item">
-                            <span class="stat-number">5.2h</span>
-                            <span class="stat-label">Usage Time</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number">98%</span>
-                            <span class="stat-label">Accuracy</span>
-                        </div>
+                    </div>
+
+
+                    <div class="card-actions">
+                        <a href="/item" class="card-action-btn">
+                            Start Recommendation
+                        </a>
                     </div>
                 </div>
             </div>
@@ -206,4 +216,5 @@
 
     <script src="../js/dashboard.js"></script>
 </body>
+
 </html>
